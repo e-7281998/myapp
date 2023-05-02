@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	
+	<!-- 스프링 설정파일 만들기 -->
+	<!-- 기본 생성자 -->
+	<!-- <bean id="car1" class="com.shinhan.section02.Car"></bean> -->
+	<!-- index로 argument 생성자 2개인 거 만들기 -->
+	<bean id="car1" class="com.shinhan.section02.Car">
+		<constructor-arg index="0" value="abc모델"></constructor-arg>
+		<constructor-arg index="1" value="1000"></constructor-arg>
+	</bean>
+	<!-- name으로 argument 생성자 2개인 거 만들기 -->
+	<!-- <bean id="car3" class="com.shinhan.section02.Car">
+		<constructor-arg name="model" value="abc모델"></constructor-arg>
+		<constructor-arg name="price" value="1000"></constructor-arg>
+	</bean> -->
+	
+	<bean id="p1" class="com.shinhan.section02.People">
+		<property name="name" value="홍길동"></property>
+		<property name="age" value="26"></property>
+		<property name="car" ref="car1"></property>
+	</bean>
+	
+	<!-- p2에서 참조할 Licenser 미리 만들기 -->
+	<bean id="Li1" class="com.shinhan.section02.License">
+		<property name="title" value="정보처리기사"></property>
+		<property name="year" value="2023"></property>
+	</bean>
+	<bean id="Li2" class="com.shinhan.section02.License">
+		<property name="title" value="웹디자인기능사"></property>
+		<property name="year" value="2021"></property>
+	</bean> 
+	<!-- scope의 default는 singleton임, 객체는 1번만 생성한다. -->
+	<!-- prototype는 얻을때마다 getBean()으로 생성한다. -->
+	<bean id="p2" class="com.shinhan.section02.People" autowire="byType" scope="prototype">
+		<property name="name" value="홍길동"></property>
+		<property name="age" value="26"></property>
+		<!-- name="car"와 같은 이름의 bean이 이으면 자동으로 주입한다. : autowire="byName" -->
+		<!-- 
+			다음은 name이 car이니까 car인 애를 찾아서 자동으로 주입하는 것임
+			즉 id가 car인 애를 찾아서 주입
+			없으면 null임
+		 -->
+		<!--
+			property의 car 변수의 타입과 같은 타입의 bean이 있으면 자동 주입한다. autowire="byType" 
+			만약 같은애가 여럿이면 뭘 넣어야 할지 몰라서 error
+		-->
+		<!-- <property name="car" ref="car3"></property> -->
+		<property name="major">
+		<!-- List 타입에 직접 넣기 -->
+			<list>
+				<value>컴퓨터공학</value>
+				<value>정보통신공학</value>
+				<value>전기전자공학</value>
+			</list>
+		</property>
+		<property name="licenseList">
+		<!-- List 타입에 객체 넣기 -->
+			<list>
+				<ref bean="Li1" />
+				<ref bean="Li2" />
+			</list>
+		</property>
+		<property name="books">
+		<!-- Map 타입에 객체 넣기 -->
+			<map>
+				<entry>
+					<key>
+						<value>첫번째 책</value>
+					</key>
+					<ref bean="book1"/>
+ 				</entry>
+ 				<entry>
+					<key>
+						<value>두번째 책</value>
+					</key>
+					<ref bean="book2"/>
+ 				</entry>
+ 				<entry>
+					<key>
+						<value>세번째 책</value>
+					</key>
+					<ref bean="book3"/>
+ 				</entry>
+			</map>
+		</property>
+		<property name="friend">
+			<!-- value-type은 안 넣어도 상관 없을 예정(?) -->
+			<set value-type="java.lang.String">
+				<value>김기범</value>
+				<value>최민호</value>
+			</set>
+		</property>
+		<property name="myprofile">
+			<props>
+				<prop key="birthday">19910923</prop>
+				<prop key="like">불카</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<!-- 하단의 Namespace에서 p체크하면 사용 가능 : p는 property를 의미 : 더 간편하게 속성 넣을 수 있도록 -->
+	<!-- xmlns:p 으로 인해 p:~ 사용 가능 -->
+	<bean id="book1" class="com.shinhan.section02.Book"
+		p:title="이것이 자바다" p:price="30000" p:kind="IT" />
+	<bean id="book2" class="com.shinhan.section02.Book"
+		p:title="리액트를 다루는 기술" p:price="33000" p:kind="IT" />
+	<bean id="book3" class="com.shinhan.section02.Book"
+		p:title="자바, 웹을 다루는 기술" p:price="35000" p:kind="IT" />
+	
+	<bean id="samsung" class="com.shinhan.section01.SamsungTV"></bean>
+ 	<bean id="lg" class="com.shinhan.section01.LgTV"></bean>
+ 	
+ 	
+ 	
+</beans>
