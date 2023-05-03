@@ -22,6 +22,7 @@
     <!-- dependency의 'groupId + -version'으로 태그이름을 작성후 dependency에서 jsp문법으로 가져다 사용할 수 있음  -->
     <!-- 버전이 바뀌면 여기만 바꾸면 됨  (참고로 태그명은 마음대로임. 일반적으로 다음과 같이 사용하는 것..)-->
     <org.springframework-version>5.3.5</org.springframework-version>
+    <org.aspectj-version>1.9.6</org.aspectj-version>
   </properties>
   
   <!-- 저장소 등록 : repositories 등록하기  -->
@@ -35,6 +36,26 @@
 <!-- 의존관계 -->
 <!-- 라이브러리 관리 -->
   <dependencies>
+
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjweaver</artifactId>
+		<version>${org.aspectj-version}</version>
+		<scope>runtime</scope>
+	</dependency>
+	
+	<dependency>
+		<groupId>org.aspectj</groupId>
+		<artifactId>aspectjtools</artifactId>
+		<version>${org.aspectj-version}</version>
+	</dependency>
+	
+	<dependency>
+		<groupId>aspectj</groupId>
+		<artifactId>aspectjrt</artifactId>
+		<version>1.5.4</version>
+	</dependency>
+	
   	<!-- (Maven) 중앙저장소에서 lombok 데려옴  -->
   	<!-- 라이브러리 추가할 때는 dependencies 안에 dependency작성  -->
   	
